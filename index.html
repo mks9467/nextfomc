@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Federal Reserve Meeting</title>
+  <style>
+    body {
+      font-family: Comic Sans MS, cursive;
+      background-color: pink;
+    }
+    
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffd700;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    h1 {
+      text-align: center;
+      color: purple;
+      font-size: 32px;
+    }
+    
+    p {
+      text-align: center;
+      font-size: 24px;
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Federal Reserve Meeting</h1>
+    <p id="meeting-date">Loading...</p>
+
+    <script>
+      // JavaScript code to dynamically predict and update the next meeting date
+      const meetingDates = [
+        new Date(2023, 5, 13),  // June 13-14
+        new Date(2023, 6, 25),  // July 25-26
+        new Date(2023, 8, 19),  // September 19-20
+        new Date(2023, 9, 31),  // October/November 31 - November 1
+        new Date(2023, 11, 12)  // December 12-13
+      ];
+
+      let nextMeetingDate = new Date();
+      let currentIndex = 0;
+      
+      for (let i = 0; i < meetingDates.length; i++) {
+        if (nextMeetingDate < meetingDates[i]) {
+          currentIndex = i;
+          break;
+        }
+      }
+      
+      if (currentIndex === meetingDates.length) {
+        nextMeetingDate = meetingDates[0];  // If all meetings have already occurred, loop back to the first meeting date
+      } else {
+        nextMeetingDate = meetingDates[currentIndex];
+      }
+      
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      const formattedDate = nextMeetingDate.toLocaleDateString('en-US', options);
+      document.getElementById('meeting-date').textContent = `The next Federal Reserve meeting will be held on ${formattedDate}. Mark your calendars!`;
+    </script>
+  </div>
+</body>
+</html>
