@@ -4,67 +4,90 @@
   <title>Federal Reserve Meeting</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f8f8f8;
+      font-family: 'Roboto', Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100vh;
     }
     
     .container {
-      max-width: 400px;
-      margin: 0 auto;
+      max-width: 600px;
+      margin: 40px auto;
       padding: 40px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      background-color: #ffffff;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
     
     h1 {
       text-align: center;
-      font-size: 24px;
-      color: #333;
-      margin-bottom: 20px;
+      font-size: 48px;
+      color: #2c3e50;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     }
     
     p {
       text-align: center;
-      font-size: 18px;
-      color: #555;
-      margin-top: 0;
+      font-size: 24px;
+      color: #34495e;
+      margin: 0;
+    }
+    
+    footer {
+      text-align: center;
+      font-size: 16px;
+      color: #888;
+      padding: 20px;
+      background-color: #ffffff;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Federal Reserve Meeting</h1>
-    <p id="meeting-date">Loading...</p>
-
-    <script>
-      // JavaScript code to dynamically update the next meeting date
-      const meetingDates = [
-        new Date(2023, 5, 13),  // June 13-14
-        new Date(2023, 6, 25),  // July 25-26
-        new Date(2023, 8, 19),  // September 19-20
-        new Date(2023, 9, 31),  // October/November 31 - November 1
-        new Date(2023, 11, 12)  // December 12-13
-      ];
-      
-      const today = new Date();
-      let nextMeetingDate;
-      
-      for (let i = 0; i < meetingDates.length; i++) {
-        if (today < meetingDates[i]) {
-          nextMeetingDate = meetingDates[i];
-          break;
-        }
-      }
-      
-      if (!nextMeetingDate) {
-        nextMeetingDate = meetingDates[0];  // If all meetings have already occurred, display the first meeting date as a fallback
-      }
-      
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      const formattedDate = nextMeetingDate.toLocaleDateString('en-US', options);
-      document.getElementById('meeting-date').textContent = 'The next Federal Reserve meeting will be held on ' + formattedDate + '.';
-    </script>
+    <h1 id="meeting-date">Loading...</h1>
+    <p id="next-meeting">Loading...</p>
   </div>
+  
+  <footer style="font-size: 14px;">Made by Anonymous</footer>
+
+  <script>
+    // JavaScript code to dynamically update the next meeting date
+    const meetingDates = [
+      { start: new Date(2023, 5, 13), end: new Date(2023, 5, 14) },  // June 13-14
+      { start: new Date(2023, 6, 25), end: new Date(2023, 6, 26) },  // July 25-26
+      { start: new Date(2023, 8, 19), end: new Date(2023, 8, 20) },  // September 19-20
+      { start: new Date(2023, 9, 31), end: new Date(2023, 10, 1) },  // October/November 31 - November 1
+      { start: new Date(2023, 11, 12), end: new Date(2023, 11, 13) }  // December 12-13
+    ];
+    
+    const today = new Date();
+    let nextMeeting;
+    
+    for (let i = 0; i < meetingDates.length; i++) {
+      if (today < meetingDates[i].start) {
+        nextMeeting = meetingDates[i];
+        break;
+      }
+    }
+    
+    if (!nextMeeting) {
+      nextMeeting = meetingDates[0];  // If all meetings have already occurred, display the first meeting as a fallback
+    }
+    
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedStartDate = nextMeeting.start.toLocaleDateString('en-US', options);
+    const formattedEndDate = nextMeeting.end.toLocaleDateString('en-US', options);
+    const meetingDateText = `${formattedStartDate} - ${formattedEndDate}`;
+    
+    document.getElementById('meeting-date').textContent = meetingDateText;
+    
+    const nextMeetingText = `The next Federal Reserve meeting will be held from ${meetingDateText}.`;
+    document.getElementById('next-meeting').textContent = nextMeetingText;
+  </script>
 </body>
 </html>
